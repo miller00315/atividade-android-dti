@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Atividade-Android-Dti</string>
+    <string name="user">Usuário</string>
+    <string name="password">Senha</string>
+    <string name="login">Entrar</string>
+    <string name="userNameError">Usuário inválido</string>
+    <string name="userPasswordError">Senha inválida</string>
+</resources>
