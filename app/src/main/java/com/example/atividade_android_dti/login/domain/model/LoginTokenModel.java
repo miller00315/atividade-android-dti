@@ -1,8 +1,10 @@
 package com.example.atividade_android_dti.login.domain.model;
 
+import androidx.annotation.NonNull;
+
 import com.google.gson.annotations.Expose;
 
-public class LoginResponseModel {
+public class LoginTokenModel {
 
     @Expose
     private String token;
@@ -10,7 +12,7 @@ public class LoginResponseModel {
     @Expose
     private String tempoExpirar;
 
-    public LoginResponseModel(String token, String tempoExpirar) {
+    public LoginTokenModel(String token, String tempoExpirar) {
         this.token = token;
         this.tempoExpirar = tempoExpirar;
     }
@@ -21,6 +23,12 @@ public class LoginResponseModel {
 
     public String getTempoExpirar() {
         return tempoExpirar;
+    }
+
+    public int getIntegerValueTempoExpirar(){
+
+        return Integer.parseInt(tempoExpirar);
+
     }
 
 }

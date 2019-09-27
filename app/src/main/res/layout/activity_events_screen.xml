@@ -4,7 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
+    android:paddingTop="@dimen/sMargin"
+    android:paddingBottom="@dimen/sMargin"
+    android:paddingStart="@dimen/sMargin"
+    android:paddingEnd="@dimen/sMargin"
     android:background="@color/backgroundColor"
     tools:context=".events.EventsScreen">
 

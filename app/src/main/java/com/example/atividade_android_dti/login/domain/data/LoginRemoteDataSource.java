@@ -1,7 +1,7 @@
 package com.example.atividade_android_dti.login.domain.data;
 
 import com.example.atividade_android_dti.login.domain.model.LoginRequestModel;
-import com.example.atividade_android_dti.login.domain.model.LoginResponseModel;
+import com.example.atividade_android_dti.login.domain.model.LoginTokenModel;
 import com.example.atividade_android_dti.services.ApiService;
 
 import retrofit2.Call;
@@ -49,15 +49,15 @@ public class LoginRemoteDataSource {
     public void doLogin(final LoginDataSource.DoLoginCallback callback, LoginRequestModel loginRequestModel){
 
 
-        final Call<LoginResponseModel> requestLogin = apiService.login(loginRequestModel);
+        final Call<LoginTokenModel> requestLogin = apiService.login(loginRequestModel);
 
-        requestLogin.enqueue(new Callback<LoginResponseModel>() {
+        requestLogin.enqueue(new Callback<LoginTokenModel>() {
             @Override
-            public void onResponse(Call<LoginResponseModel> call, Response<LoginResponseModel> response) {
+            public void onResponse(Call<LoginTokenModel> call, Response<LoginTokenModel> response) {
 
                 if(response.isSuccessful()){
 
-                    LoginResponseModel resultResponse = response.body();
+                    LoginTokenModel resultResponse = response.body();
 
                     if(resultResponse != null){
 
@@ -73,7 +73,7 @@ public class LoginRemoteDataSource {
             }
 
             @Override
-            public void onFailure(Call<LoginResponseModel> call, Throwable t) {
+            public void onFailure(Call<LoginTokenModel> call, Throwable t) {
 
                 callback.onLoginFailed();
 

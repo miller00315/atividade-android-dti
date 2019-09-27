@@ -1,12 +1,12 @@
 package com.example.atividade_android_dti.login.domain.data;
 
-import com.example.atividade_android_dti.login.domain.model.LoginResponseModel;
+import com.example.atividade_android_dti.login.domain.model.LoginTokenModel;
 
 public interface LoginDataSource {
 
     interface DoLoginCallback{
 
-        void onLoginSuccess(LoginResponseModel loginResponseModel);
+        void onLoginSuccess(LoginTokenModel loginTokenModel);
         void onLoginFailed();
     }
 }

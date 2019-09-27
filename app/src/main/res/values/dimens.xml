@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="appbar_padding">16dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="appbar_padding_top">8dp</dimen>
+    <dimen name="txtTiny">11sp</dimen>
+    <dimen name="txtSmall">14sp</dimen>
+    <dimen name="txtRegular">16sp</dimen>
+    <dimen name="txtNormal">18sp</dimen>
+    <dimen name="txtLarge">32sp</dimen>
+
+    <dimen name="lMargin">32dp</dimen>
+    <dimen name="mMargin">16dp</dimen>
+    <dimen name="sMargin">5dp</dimen>
+</resources>

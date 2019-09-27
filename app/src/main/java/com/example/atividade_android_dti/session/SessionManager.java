@@ -1,4 +1,4 @@
-package com.example.atividade_android_dti.Session;
+package com.example.atividade_android_dti.session;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,13 +8,16 @@ import android.util.Log;
 
 import com.example.atividade_android_dti.GlobalApplicationContext;
 import com.example.atividade_android_dti.login.LoginScreen;
-import com.example.atividade_android_dti.login.domain.model.LoginResponseModel;
+import com.example.atividade_android_dti.login.domain.model.LoginTokenModel;
 import com.example.atividade_android_dti.utils.Utils;
+
+import java.util.concurrent.TimeUnit;
 
 
 public class SessionManager {
 
     private static SessionManager INSTANCE;
+    private static int EXPIRATION_SESSION_TIME;
 
     public static SessionManager getInstance(){
 
@@ -26,27 +29,31 @@ public class SessionManager {
 
     private SessionManager() { }
 
-    public void saveLoginTokenOnPreferences(LoginResponseModel loginResponseModel){
+    public void saveLoginTokenOnPreferences(LoginTokenModel loginTokenModel){
+
+        EXPIRATION_SESSION_TIME = loginTokenModel.getIntegerValueTempoExpirar();
 
         SharedPreferences sharedPreferences = getSharedPreferences();
 
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        editor.putString("token", loginResponseModel.getToken());
-        editor.putString("tempoExpirar", loginResponseModel.getTempoExpirar());
+        editor.putString("token", loginTokenModel.getToken());
 
         editor.apply();
+
     }
 
-    public void clearSharedPreferences(){
+    private void clearSharedPreferences(){
 
         SharedPreferences sharedPreferences = getSharedPreferences();
 
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        editor.clear();
+        editor.remove("token");
 
         editor.apply();
+
+        Log.w("lot", sharedPreferences.toString());
 
     }
 
@@ -59,18 +66,14 @@ public class SessionManager {
 
     public void startSessionCountDown(){
 
-        new CountDownTimer(60000, 2000){
+        new CountDownTimer(TimeUnit.MINUTES.toMillis(EXPIRATION_SESSION_TIME), 2000){
 
-            public void onTick(long millisUntilFinished) {
-                Log.w("thi", String.valueOf(millisUntilFinished));
-            }
+            public void onTick(long millisUntilFinished) { }
 
             public void onFinish() {
                 logOut();
             }
         }.start();
-
-
     }
 
     private void logOut(){
@@ -78,6 +81,8 @@ public class SessionManager {
         Intent i = new Intent(GlobalApplicationContext.getAPPCONTEXT(), LoginScreen.class);
 
         GlobalApplicationContext.getAPPCONTEXT().startActivity(i);
+
+        clearSharedPreferences();
 
         Intent brodCastIntent = new Intent();
         brodCastIntent.setAction(Utils.BROADCAST_MESSAGE);

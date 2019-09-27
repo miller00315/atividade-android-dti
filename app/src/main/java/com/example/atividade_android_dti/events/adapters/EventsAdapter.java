@@ -17,22 +17,13 @@ import java.util.ArrayList;
 
 public class EventsAdapter extends RecyclerView.Adapter<EventsViewHolder> {
 
-    private static EventsAdapter INSTANCE;
-
     private ArrayList<Event> events;
 
-    private EventsAdapter(){
+    public EventsAdapter(){
 
         events = new ArrayList<>();
     }
 
-    public static EventsAdapter getInstance(){
-
-        if(INSTANCE == null)
-            INSTANCE = new EventsAdapter();
-
-        return INSTANCE;
-    }
 
     @NonNull
     @Override
@@ -60,4 +51,5 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsViewHolder> {
     public int getItemCount() {
         return events != null ? events.size() : 0;
     }
+
 }

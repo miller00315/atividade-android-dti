@@ -9,9 +9,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -19,8 +17,6 @@ import com.example.atividade_android_dti.R;
 import com.example.atividade_android_dti.events.adapters.EventsAdapter;
 import com.example.atividade_android_dti.events.contract.EventsContract;
 import com.example.atividade_android_dti.events.domain.model.EventsList;
-import com.example.atividade_android_dti.login.LoginScreen;
-import com.example.atividade_android_dti.login.contract.LoginContract;
 import com.example.atividade_android_dti.utils.Utils;
 
 public class EventsScreen extends AppCompatActivity implements EventsContract.View {
@@ -39,7 +35,7 @@ public class EventsScreen extends AppCompatActivity implements EventsContract.Vi
         recycle_events = findViewById(R.id.recylcer_events);
         loading_layout = findViewById(R.id.layout_loading);
 
-        eventsAdapter = EventsAdapter.getInstance();
+        eventsAdapter = new EventsAdapter();
 
         setReceiver();
 
@@ -92,10 +88,20 @@ public class EventsScreen extends AppCompatActivity implements EventsContract.Vi
     }
 
     @Override
-    public void setPresenter(EventsContract.Presenter presenter) {
-        mLoginContractPresenter = presenter;
+    public void noConnectionInternet() {
 
-        mLoginContractPresenter.start();
+        Toast.makeText(this, "Sem conexão com a internet, verifique sua conexão e tente novamente.", Toast.LENGTH_LONG).show();
+        loading_layout.setVisibility(View.GONE);
+        recycle_events.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void setPresenter(EventsContract.Presenter presenter) {
+
+        if(mLoginContractPresenter == null) {
+            mLoginContractPresenter = presenter;
+            mLoginContractPresenter.start();
+        }
     }
 
     public void setReceiver(){
@@ -106,6 +112,8 @@ public class EventsScreen extends AppCompatActivity implements EventsContract.Vi
         mReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
+
+                Toast.makeText(context, "Sua sessão expirou, faça o login novamente.", Toast.LENGTH_LONG).show();
 
                finish();
 

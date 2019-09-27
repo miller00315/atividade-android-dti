@@ -13,6 +13,7 @@ public interface LoginContract {
         void onLoginFailed();
         void onLoginSuccess();
         void showLoading();
+        void noConnectionInternet();
 
     }
 

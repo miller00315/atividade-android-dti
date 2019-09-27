@@ -5,8 +5,9 @@ import com.example.atividade_android_dti.login.contract.LoginContract;
 import com.example.atividade_android_dti.login.domain.data.LoginDataSource;
 import com.example.atividade_android_dti.login.domain.data.LoginRemoteDataSource;
 import com.example.atividade_android_dti.login.domain.model.LoginRequestModel;
-import com.example.atividade_android_dti.login.domain.model.LoginResponseModel;
-import com.example.atividade_android_dti.Session.SessionManager;
+import com.example.atividade_android_dti.login.domain.model.LoginTokenModel;
+import com.example.atividade_android_dti.session.SessionManager;
+import com.example.atividade_android_dti.utils.ConnectionCheck;
 import com.example.atividade_android_dti.utils.StringValidator;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -36,23 +37,22 @@ public class LoginPresenter implements LoginContract.Presenter, LoginDataSource.
         if(!StringValidator.isValidUserName(user_name)){
 
             mLoginContractView.isValidUserName(false);
-
             isDataOk = false;
         }
 
         if(!StringValidator.isValidPassword(user_password)){
 
             mLoginContractView.isValidUserPassword(false);
-
             isDataOk = false;
         }
 
-        if(isDataOk){
+        if(isDataOk)
+            if(ConnectionCheck.getInstance().isNetworkAvailable()){
+                mLoginContractView.showLoading();
+                mLoginremoteDataSource.doLogin(this, new LoginRequestModel(user_name, user_password));
 
-            mLoginContractView.showLoading();
-            mLoginremoteDataSource.doLogin(this, new LoginRequestModel(user_name, user_password));
-
-        }
+            }else
+                mLoginContractView.noConnectionInternet();
 
     }
 
@@ -62,9 +62,9 @@ public class LoginPresenter implements LoginContract.Presenter, LoginDataSource.
     }
 
     @Override
-    public void onLoginSuccess(LoginResponseModel loginResponseModel) {
+    public void onLoginSuccess(LoginTokenModel loginTokenModel) {
 
-        saveToken(loginResponseModel);
+        saveToken(loginTokenModel);
 
         mLoginContractView.onLoginSuccess();
 
@@ -75,11 +75,11 @@ public class LoginPresenter implements LoginContract.Presenter, LoginDataSource.
         mLoginContractView.onLoginFailed();
     }
 
-    private void saveToken(LoginResponseModel loginResponseModel){
+    private void saveToken(LoginTokenModel loginTokenModel){
 
         SessionManager preferenceManager =  SessionManager.getInstance();
 
-        preferenceManager.saveLoginTokenOnPreferences(loginResponseModel);
+        preferenceManager.saveLoginTokenOnPreferences(loginTokenModel);
 
         preferenceManager.startSessionCountDown();
 

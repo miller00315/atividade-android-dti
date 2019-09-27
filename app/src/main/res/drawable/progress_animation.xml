@@ -3,7 +3,7 @@
 
     <item android:gravity="center">
         <animated-rotate
-            android:drawable="@drawable/ic_loading"
+            android:drawable="@drawable/ic_sand_clock"
             android:pivotX="50%"
             android:pivotY="50%" />
     </item>

@@ -7,6 +7,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.atividade_android_dti.R;
 import com.example.atividade_android_dti.events.EventsScreen;
@@ -101,6 +102,14 @@ public class LoginScreen extends AppCompatActivity implements LoginContract.View
     public void showLoading() {
         loading_screen.setVisibility(View.VISIBLE);
         main_layout_login.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void noConnectionInternet() {
+        loading_screen.setVisibility(View.GONE);
+        main_layout_login.setVisibility(View.VISIBLE);
+
+        Toast.makeText(this, "Sem conexão com a internet, verifique sua conexão e tente novamente.", Toast.LENGTH_LONG).show();
     }
 
     @Override

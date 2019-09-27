@@ -8,19 +8,22 @@
     android:background="@color/backgroundColor">
 
     <ImageView
+        android:id="@+id/ic_ballons"
         android:src="@drawable/ic_balloons"
         android:layout_width="150dp"
         android:layout_height="150dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/progress"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
     <ProgressBar
         android:id="@+id/progress"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_height="0dp"
+        android:indeterminate="true"
+        android:indeterminateDrawable="@drawable/progress_animation"
+        app:layout_constraintTop_toBottomOf="@id/ic_ballons"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

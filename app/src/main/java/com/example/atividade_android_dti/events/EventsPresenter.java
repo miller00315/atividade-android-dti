@@ -5,6 +5,7 @@ import com.example.atividade_android_dti.events.contract.EventsContract;
 import com.example.atividade_android_dti.events.domain.data.EventRemoteDataSource;
 import com.example.atividade_android_dti.events.domain.data.EventsDataSource;
 import com.example.atividade_android_dti.events.domain.model.EventsList;
+import com.example.atividade_android_dti.utils.ConnectionCheck;
 
 public class EventsPresenter implements EventsContract.Presenter, EventsDataSource.requestEventsCallback {
 
@@ -27,7 +28,12 @@ public class EventsPresenter implements EventsContract.Presenter, EventsDataSour
     @Override
     public void start() {
         mEventsContractView.showLoading();
-        eventRemoteDataSource.getEventsData(this);
+
+        if(ConnectionCheck.getInstance().isNetworkAvailable()) {
+            eventRemoteDataSource.getEventsData(this);
+        }else{
+            mEventsContractView.noConnectionInternet();
+        }
     }
 
     @Override

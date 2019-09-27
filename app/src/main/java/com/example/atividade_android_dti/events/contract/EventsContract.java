@@ -11,6 +11,7 @@ public interface EventsContract {
         void showLoading();
         void onRequestEventsFailed();
         void onRequestEventsSuccess(EventsList eventsList);
+        void noConnectionInternet();
     }
 
     interface Presenter extends BasePresenter{ }
