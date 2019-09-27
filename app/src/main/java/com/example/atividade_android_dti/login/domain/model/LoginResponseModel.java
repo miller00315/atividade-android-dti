@@ -19,15 +19,8 @@ public class LoginResponseModel {
         return token;
     }
 
-    public void setToken(String token) {
-        this.token = token;
-    }
-
     public String getTempoExpirar() {
         return tempoExpirar;
     }
 
-    public void setTempoExpirar(String tempoExpirar) {
-        this.tempoExpirar = tempoExpirar;
-    }
 }

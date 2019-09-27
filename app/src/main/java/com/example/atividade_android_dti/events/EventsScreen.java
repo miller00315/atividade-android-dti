@@ -5,7 +5,13 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -13,7 +19,9 @@ import com.example.atividade_android_dti.R;
 import com.example.atividade_android_dti.events.adapters.EventsAdapter;
 import com.example.atividade_android_dti.events.contract.EventsContract;
 import com.example.atividade_android_dti.events.domain.model.EventsList;
+import com.example.atividade_android_dti.login.LoginScreen;
 import com.example.atividade_android_dti.login.contract.LoginContract;
+import com.example.atividade_android_dti.utils.Utils;
 
 public class EventsScreen extends AppCompatActivity implements EventsContract.View {
 
@@ -21,6 +29,7 @@ public class EventsScreen extends AppCompatActivity implements EventsContract.Vi
     private RecyclerView recycle_events;
     private ConstraintLayout loading_layout;
     private EventsAdapter eventsAdapter;
+    private BroadcastReceiver mReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +40,8 @@ public class EventsScreen extends AppCompatActivity implements EventsContract.Vi
         loading_layout = findViewById(R.id.layout_loading);
 
         eventsAdapter = EventsAdapter.getInstance();
+
+        setReceiver();
 
         new EventsPresenter(this);
     }
@@ -46,6 +57,14 @@ public class EventsScreen extends AppCompatActivity implements EventsContract.Vi
         recycle_events.setLayoutManager(linearLayoutManager);
 
         recycle_events.setAdapter(eventsAdapter);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        unregisterReceiver(mReceiver);
+
     }
 
     @Override
@@ -77,5 +96,22 @@ public class EventsScreen extends AppCompatActivity implements EventsContract.Vi
         mLoginContractPresenter = presenter;
 
         mLoginContractPresenter.start();
+    }
+
+    public void setReceiver(){
+
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(Utils.BROADCAST_MESSAGE);
+
+        mReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+
+               finish();
+
+            }
+        };
+
+        registerReceiver(mReceiver, intentFilter);
     }
 }

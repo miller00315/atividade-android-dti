@@ -12,13 +12,14 @@
 
     <application
         android:allowBackup="true"
+        android:name=".GlobalApplicationContext"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".events.EventsScreen"></activity>
-        <activity android:name=".login.Screen">
+        <activity android:name=".events.EventsScreen"/>
+        <activity android:name=".login.LoginScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

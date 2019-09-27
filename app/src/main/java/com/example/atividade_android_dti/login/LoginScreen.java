@@ -18,7 +18,7 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.Objects;
 
-public class Screen extends AppCompatActivity implements LoginContract.View, TextWatchersInterface {
+public class LoginScreen extends AppCompatActivity implements LoginContract.View, TextWatchersInterface {
 
     private LoginContract.Presenter login_presenter;
     private TextWatchers text_watchers;
@@ -46,7 +46,6 @@ public class Screen extends AppCompatActivity implements LoginContract.View, Tex
            permissions_check.requestSelfPermission(this);
 
         text_watchers.setListener(this);
-
 
         user_name.addTextChangedListener(text_watchers.getUserNameTextWatcher());
         user_password.addTextChangedListener(text_watchers.getUserPasswordTextWatcher());
@@ -91,11 +90,11 @@ public class Screen extends AppCompatActivity implements LoginContract.View, Tex
     @Override
     public void onLoginSuccess() {
 
+        finish();
+
         Intent intent = new Intent(this, EventsScreen.class);
         startActivity(intent);
 
-        loading_screen.setVisibility(View.GONE);
-        main_layout_login.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -106,8 +105,7 @@ public class Screen extends AppCompatActivity implements LoginContract.View, Tex
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if(!permissions_check.checkSelfPermissions(this)){
+        if(!permissions_check.checkSelfPermissions(this))
             permissions_check.requestSelfPermission(this);
-        }
     }
 }

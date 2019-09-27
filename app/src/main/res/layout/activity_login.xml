@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/backgroundColor"
     android:padding="16dp"
-    tools:context=".login.Screen">
+    tools:context=".login.LoginScreen">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main_layout_login"

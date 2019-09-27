@@ -6,6 +6,7 @@ import com.example.atividade_android_dti.login.domain.data.LoginDataSource;
 import com.example.atividade_android_dti.login.domain.data.LoginRemoteDataSource;
 import com.example.atividade_android_dti.login.domain.model.LoginRequestModel;
 import com.example.atividade_android_dti.login.domain.model.LoginResponseModel;
+import com.example.atividade_android_dti.Session.SessionManager;
 import com.example.atividade_android_dti.utils.StringValidator;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -62,11 +63,25 @@ public class LoginPresenter implements LoginContract.Presenter, LoginDataSource.
 
     @Override
     public void onLoginSuccess(LoginResponseModel loginResponseModel) {
+
+        saveToken(loginResponseModel);
+
         mLoginContractView.onLoginSuccess();
+
     }
 
     @Override
     public void onLoginFailed() {
         mLoginContractView.onLoginFailed();
+    }
+
+    private void saveToken(LoginResponseModel loginResponseModel){
+
+        SessionManager preferenceManager =  SessionManager.getInstance();
+
+        preferenceManager.saveLoginTokenOnPreferences(loginResponseModel);
+
+        preferenceManager.startSessionCountDown();
+
     }
 }
