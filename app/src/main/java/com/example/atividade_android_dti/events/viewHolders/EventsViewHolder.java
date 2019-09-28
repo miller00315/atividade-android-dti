@@ -50,7 +50,7 @@ public class EventsViewHolder extends RecyclerView.ViewHolder {
 
             Picasso
                     .get()
-                    .load(imageSource.isEmpty() ? getNoImage() : imageSource )
+                    .load(imageSource.isEmpty() ? getIconToNoImage() : imageSource )
                     .fit()
                     .placeholder(R.drawable.ic_balloons)
                     .error(R.drawable.ic_garland)
@@ -58,7 +58,7 @@ public class EventsViewHolder extends RecyclerView.ViewHolder {
 
     }
 
-    private String getNoImage(){
+    private String getIconToNoImage(){
 
         Context context = GlobalApplicationContext.getAPPCONTEXT();
 

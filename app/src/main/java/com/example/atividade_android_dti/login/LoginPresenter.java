@@ -91,9 +91,8 @@ public class LoginPresenter implements LoginContract.Presenter {
         Context context = GlobalApplicationContext.getAPPCONTEXT();
         PermissionsHelper permissionsHelper = PermissionsHelper.getInstance();
 
-       if (!permissionsHelper.checkSelfPermissions(context)) {
+       if (!permissionsHelper.checkSelfPermissions(context))
            permissionsHelper.requestSelfPermission(context);
-       }
 
     }
 
