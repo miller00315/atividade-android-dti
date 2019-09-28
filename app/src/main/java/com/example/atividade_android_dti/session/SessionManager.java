@@ -18,6 +18,7 @@ public class SessionManager {
 
     private static SessionManager INSTANCE;
     private static int EXPIRATION_SESSION_TIME;
+    private CountDownTimer timerSession;
 
     public static SessionManager getInstance(){
 
@@ -60,7 +61,13 @@ public class SessionManager {
 
     public void startSessionCountDown(){
 
-        new CountDownTimer(TimeUnit.MINUTES.toMillis(EXPIRATION_SESSION_TIME), 2000){
+        if(timerSession != null){
+
+            timerSession.cancel();
+            timerSession = null;
+        }
+
+       timerSession = new CountDownTimer(TimeUnit.MINUTES.toMillis(EXPIRATION_SESSION_TIME), 2000){
 
             public void onTick(long millisUntilFinished) { }
 
@@ -68,7 +75,9 @@ public class SessionManager {
                 logOut();
             }
 
-        }.start();
+        };
+
+       timerSession.start();
     }
 
     private void logOut(){
