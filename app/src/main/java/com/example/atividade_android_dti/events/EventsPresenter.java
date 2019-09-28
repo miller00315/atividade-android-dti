@@ -7,20 +7,13 @@ public class EventsPresenter implements EventsContract.Presenter {
     private EventsContract.View mEventsContractView;
     private EventsInteractor eventsInteractor;
 
-    public EventsPresenter(EventsContract.View mEventsCOntractView) {
+    public EventsPresenter(EventsContract.View mEventsContractView) {
 
-        this.mEventsContractView = mEventsCOntractView;
-
+        this.mEventsContractView = mEventsContractView;
         eventsInteractor = new EventsInteractor(this);
-
-        mEventsCOntractView.setPresenter(this);
-
-        requestEventsData();
+        mEventsContractView.setPresenter(this);
 
     }
-
-    @Override
-    public void start() { }
 
     @Override
     public void requestEventsData() {
@@ -57,7 +50,6 @@ public class EventsPresenter implements EventsContract.Presenter {
 
     @Override
     public void onDestroy(){
-
         mEventsContractView = null;
     }
 

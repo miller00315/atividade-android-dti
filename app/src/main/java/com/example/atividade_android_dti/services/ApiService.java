@@ -17,6 +17,6 @@ public interface ApiService {
     Call<LoginTokenModel> login(@Body LoginRequestModel loginRequestModel);
 
     @GET("eventos-mensais")
-    Call<EventsList> getEvents();
+    Call<EventsList> getEventsDataFromServer();
 
 }

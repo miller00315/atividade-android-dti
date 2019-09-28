@@ -42,7 +42,7 @@ public class LoginInteractor implements LoginApiInterface {
 
     }
 
-    private void setToken(LoginTokenModel loginTokenModel){
+    private void startSession(LoginTokenModel loginTokenModel){
 
         SessionManager sessionManager =  SessionManager.getInstance();
 
@@ -56,7 +56,7 @@ public class LoginInteractor implements LoginApiInterface {
     public void onLoginSuccess(LoginTokenModel loginTokenModel) {
 
         if(loginTokenModel != null){
-            setToken(loginTokenModel);
+            startSession(loginTokenModel);
             if(presenter != null)
                 presenter.onLoginSuccess(loginTokenModel);
         }else{

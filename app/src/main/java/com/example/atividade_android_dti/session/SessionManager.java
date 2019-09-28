@@ -45,7 +45,7 @@ public class SessionManager {
 
         SharedPreferences.Editor editor = getSharedPreferences().edit();
 
-        editor.remove("token");
+        editor.clear();
 
         editor.apply();
 
@@ -67,15 +67,14 @@ public class SessionManager {
             public void onFinish() {
                 logOut();
             }
+
         }.start();
     }
 
     private void logOut(){
 
         Intent i = new Intent(GlobalApplicationContext.getAPPCONTEXT(), LoginActivity.class);
-
         GlobalApplicationContext.getAPPCONTEXT().startActivity(i);
-
         removeTokenSharedPreferences();
 
         Intent brodCastIntent = new Intent();

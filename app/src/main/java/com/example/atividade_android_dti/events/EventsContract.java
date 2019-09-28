@@ -10,6 +10,7 @@ public interface EventsContract {
 
         void showLoading();
         void hideLoading();
+        void requestEventsData();
         void onEventsRequestSuccess(EventsList eventsList);
         void onEventsRequestFailed();
         void noConnectionInternet();

@@ -29,7 +29,7 @@ public class EventsApi {
 
         if(apiService != null) {
 
-            Call<EventsList> request_events_data = apiService.getEvents();
+            Call<EventsList> request_events_data = apiService.getEventsDataFromServer();
 
 
             request_events_data.enqueue(new Callback<EventsList>() {

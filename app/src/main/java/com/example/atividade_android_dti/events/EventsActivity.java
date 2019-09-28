@@ -86,6 +86,11 @@ public class EventsActivity extends AppCompatActivity implements EventsContract.
     }
 
     @Override
+    public void requestEventsData() {
+        mLoginContractPresenter.requestEventsData();
+    }
+
+    @Override
     public void onEventsRequestSuccess(EventsList eventsList) {
         eventsAdapter.addEvents(eventsList);
     }
@@ -97,17 +102,13 @@ public class EventsActivity extends AppCompatActivity implements EventsContract.
 
     @Override
     public void noConnectionInternet() {
-
         Toast.makeText(this, getResources().getString(R.string.noInternetConnection), Toast.LENGTH_LONG).show();
-
     }
 
     @Override
     public void setPresenter(EventsContract.Presenter presenter) {
-
-        if(mLoginContractPresenter == null) {
-            mLoginContractPresenter = presenter;
-        }
+        mLoginContractPresenter = presenter;
+        mLoginContractPresenter.requestEventsData();
     }
 
     public void setReceiver(){

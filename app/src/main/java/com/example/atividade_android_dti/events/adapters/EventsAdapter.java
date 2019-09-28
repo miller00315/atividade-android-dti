@@ -13,12 +13,13 @@ import com.example.atividade_android_dti.GlobalApplicationContext;
 import com.example.atividade_android_dti.R;
 import com.example.atividade_android_dti.events.domain.models.EventsList;
 import com.example.atividade_android_dti.events.viewHolders.EventsViewHolder;
+import com.example.atividade_android_dti.login.LoginContract;
 import com.example.atividade_android_dti.utils.DateHandler;
 import com.example.atividade_android_dti.utils.EventsComparator;
 
 import java.util.Collections;
 
-public class EventsAdapter extends RecyclerView.Adapter<EventsViewHolder> {
+public class EventsAdapter<P extends LoginContract.Presenter> extends RecyclerView.Adapter<EventsViewHolder> {
 
     private EventsList eventsList;
     private int lastPosition = -1;
@@ -32,13 +33,13 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull EventsViewHolder holder, int position) {
 
-        holder.setEventData(DateHandler.getDormatedData(eventsList.getEvents().get(position).getDate()));
-        holder.setEventDescription(eventsList.getEvents().get(position).getDescricao());
-        holder.setEventName(eventsList.getEvents().get(position).getNome());
-        holder.setEventImage(eventsList.getEvents().get(position).getRotaImagem());
-        holder.setEventId(String.valueOf(eventsList.getEvents().get(position).getId()));
+            holder.setEventData(DateHandler.getDormatedData(eventsList.getEvents().get(position).getDate()));
+            holder.setEventDescription(eventsList.getEvents().get(position).getDescricao());
+            holder.setEventName(eventsList.getEvents().get(position).getNome());
+            holder.setEventImage(eventsList.getEvents().get(position).getRotaImagem());
+            holder.setEventId(String.valueOf(eventsList.getEvents().get(position).getId()));
 
-        setAnimation(holder.itemView, position);
+            setAnimation(holder.itemView, position);
 
     }
 
