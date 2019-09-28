@@ -70,4 +70,11 @@ public class TextWatchers {
     public TextWatcher getUserPasswordTextWatcher() {
         return userPasswordTextWatcher;
     }
+
+    public interface TextWatchersInterface {
+
+        void isValidUserName(boolean result);
+
+        void isValidUserPassword(boolean result);
+    }
 }

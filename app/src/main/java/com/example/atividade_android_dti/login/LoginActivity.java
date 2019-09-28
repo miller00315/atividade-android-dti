@@ -13,12 +13,11 @@ import com.example.atividade_android_dti.R;
 import com.example.atividade_android_dti.events.EventsActivity;
 import com.example.atividade_android_dti.utils.PermissionsHelper;
 import com.example.atividade_android_dti.utils.TextWatchers;
-import com.example.atividade_android_dti.utils.TextWatchersInterface;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.Objects;
 
-public class LoginActivity extends AppCompatActivity implements LoginContract.View, TextWatchersInterface {
+public class LoginActivity extends AppCompatActivity implements LoginContract.View, TextWatchers.TextWatchersInterface {
 
     private LoginContract.Presenter loginPresenter;
     private TextWatchers textWatchers;
@@ -76,6 +75,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
     }
 
     public void validCredentials(View view) {
+
         loginPresenter.validCredentials(Objects.requireNonNull(userName.getText())
                         .toString().trim(),
                 Objects.requireNonNull(userPassword.getText())
