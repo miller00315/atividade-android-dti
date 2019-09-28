@@ -65,6 +65,7 @@ public class SessionManager {
 
             timerSession.cancel();
             timerSession = null;
+
         }
 
        timerSession = new CountDownTimer(TimeUnit.MINUTES.toMillis(EXPIRATION_SESSION_TIME), 2000){
