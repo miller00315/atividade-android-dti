@@ -33,7 +33,6 @@ public class PermissionsCheck {
 
     }
 
-
     public boolean checkSelfPermissions(Activity act){
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
@@ -52,6 +51,10 @@ public class PermissionsCheck {
         }else{
             return true;
         }
+    }
+
+    public void onDestroy(){
+        PermissionsCheck.INSTANCE = null;
     }
 
     public void requestSelfPermission(Activity act){

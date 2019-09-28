@@ -16,31 +16,37 @@ import com.squareup.picasso.Picasso;
 
 public class EventsViewHolder extends RecyclerView.ViewHolder {
 
-    private TextView event_data, event_description, event_name;
-    private ImageView event_image;
+    private TextView eventData, eventDescription, eventName, eventId;
+    private ImageView eventImage;
 
     public EventsViewHolder(@NonNull View itemView) {
         super(itemView);
 
-        event_data          = itemView.findViewById(R.id.event_data);
-        event_description   = itemView.findViewById(R.id.event_description);
-        event_name          = itemView.findViewById(R.id.event_name);
-        event_image         = itemView.findViewById(R.id.event_image);
+        eventData           = itemView.findViewById(R.id.event_data);
+        eventDescription    = itemView.findViewById(R.id.event_description);
+        eventName           = itemView.findViewById(R.id.event_name);
+        eventImage          = itemView.findViewById(R.id.event_image);
+        eventId             = itemView.findViewById(R.id.event_id);
+
     }
 
-    public void setEvent_data(String data) {
-         event_data.setText(data);
+    public void setEventId(String eventId) {
+        this.eventId.setText(eventId);
     }
 
-    public void setEvent_description(String description) {
-        event_description.setText(description);
+    public void setEventData(String data) {
+         eventData.setText(data);
     }
 
-    public void setEvent_name(String name) {
-        event_name.setText(name);
+    public void setEventDescription(String description) {
+        eventDescription.setText(description);
     }
 
-    public void setEvent_image(String imageSource) {
+    public void setEventName(String name) {
+        eventName.setText(name);
+    }
+
+    public void setEventImage(String imageSource) {
 
             Picasso
                     .get()
@@ -48,7 +54,7 @@ public class EventsViewHolder extends RecyclerView.ViewHolder {
                     .fit()
                     .placeholder(R.drawable.ic_balloons)
                     .error(R.drawable.ic_garland)
-                    .into(event_image);
+                    .into(eventImage);
 
     }
 

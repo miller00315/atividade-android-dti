@@ -1,65 +1,85 @@
 package com.example.atividade_android_dti.login;
 
 
-import com.example.atividade_android_dti.login.contract.LoginContract;
-import com.example.atividade_android_dti.login.domain.data.LoginDataSource;
-import com.example.atividade_android_dti.login.domain.data.LoginRemoteDataSource;
-import com.example.atividade_android_dti.login.domain.model.LoginRequestModel;
-import com.example.atividade_android_dti.login.domain.model.LoginTokenModel;
-import com.example.atividade_android_dti.session.SessionManager;
-import com.example.atividade_android_dti.utils.ConnectionCheck;
-import com.example.atividade_android_dti.utils.StringValidator;
+import com.example.atividade_android_dti.login.domain.models.LoginTokenModel;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class LoginPresenter implements LoginContract.Presenter, LoginDataSource.DoLoginCallback {
+public class LoginPresenter implements LoginContract.Presenter {
 
     private LoginContract.View mLoginContractView;
-    private LoginRemoteDataSource mLoginremoteDataSource;
+    private LoginInteractor mLoginInteractor;
 
     public LoginPresenter(LoginContract.View mLoginContractView) {
 
         this.mLoginContractView = checkNotNull(mLoginContractView);
 
-        mLoginremoteDataSource = LoginRemoteDataSource.getInstance();
-
-        mLoginremoteDataSource.setRetrofit();
+        mLoginInteractor = new LoginInteractor(this);
 
         mLoginContractView.setPresenter(this);
 
     }
 
     @Override
-    public void doLogin(String user_name, String user_password) {
+    public void validCredentials(String username, String password) {
 
-        boolean isDataOk = true;
+        if(mLoginContractView != null)
+            mLoginContractView.showLoading();
 
-        if(!StringValidator.isValidUserName(user_name)){
+        mLoginInteractor.login(username, password);
 
-            mLoginContractView.isValidUserName(false);
-            isDataOk = false;
+    }
+
+    public void onDestroy(){
+        mLoginContractView = null;
+    }
+
+    @Override
+    public void onLoginFailed() {
+        if(mLoginContractView != null){
+            mLoginContractView.hideLoading();
+            mLoginContractView.onLoginFailed();
         }
+    }
 
-        if(!StringValidator.isValidPassword(user_password)){
-
-            mLoginContractView.isValidUserPassword(false);
-            isDataOk = false;
+    @Override
+    public void onLoginSuccess(LoginTokenModel loginTokenModel) {
+        if(mLoginContractView != null){
+            mLoginContractView.onLoginSuccess();
         }
+    }
 
-        if(isDataOk)
-            if(ConnectionCheck.getInstance().isNetworkAvailable()){
-                mLoginContractView.showLoading();
-                mLoginremoteDataSource.doLogin(this, new LoginRequestModel(user_name, user_password));
+    @Override
+    public void invalidUserName() {
+        if(mLoginContractView != null){
+            mLoginContractView.hideLoading();
+            mLoginContractView.invalidUserName();
+        }
+    }
 
-            }else
-                mLoginContractView.noConnectionInternet();
+    @Override
+    public void invalidPassword() {
+        if(mLoginContractView != null){
+            mLoginContractView.hideLoading();
+            mLoginContractView.invalidPassword();
+        }
+    }
 
+    @Override
+    public void noInternetConnection() {
+        if(mLoginContractView != null){
+            mLoginContractView.hideLoading();
+            mLoginContractView.noConnectionInternet();
+        }
     }
 
     @Override
     public void start() {
 
     }
+ /*
+    @Override
+    public void start() { }
 
     @Override
     public void onLoginSuccess(LoginTokenModel loginTokenModel) {
@@ -75,13 +95,16 @@ public class LoginPresenter implements LoginContract.Presenter, LoginDataSource.
         mLoginContractView.onLoginFailed();
     }
 
+
     private void saveToken(LoginTokenModel loginTokenModel){
 
-        SessionManager preferenceManager =  SessionManager.getInstance();
+        SessionManager sessionManager =  SessionManager.getInstance();
 
-        preferenceManager.saveLoginTokenOnPreferences(loginTokenModel);
+        sessionManager.setLoginTokenOnPreferences(loginTokenModel);
 
-        preferenceManager.startSessionCountDown();
+        sessionManager.startSessionCountDown();
 
     }
+
+    */
 }

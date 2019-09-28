@@ -1,6 +1,5 @@
 package com.example.atividade_android_dti.events.adapters;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -8,21 +7,18 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.atividade_android_dti.R;
-import com.example.atividade_android_dti.events.domain.model.Event;
-import com.example.atividade_android_dti.events.domain.model.EventsList;
+import com.example.atividade_android_dti.events.domain.models.EventsList;
 import com.example.atividade_android_dti.events.viewHolders.EventsViewHolder;
-import com.example.atividade_android_dti.utils.DataManipulator;
+import com.example.atividade_android_dti.utils.DateHandler;
+import com.example.atividade_android_dti.utils.EventsComparator;
 
-import java.util.ArrayList;
+import java.util.Collections;
 
 public class EventsAdapter extends RecyclerView.Adapter<EventsViewHolder> {
 
-    private ArrayList<Event> events;
+    private EventsList eventsList;
 
-    public EventsAdapter(){
-
-        events = new ArrayList<>();
-    }
+    public EventsAdapter(){ }
 
 
     @NonNull
@@ -34,22 +30,26 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull EventsViewHolder holder, int position) {
 
-        holder.setEvent_data(DataManipulator.getDormatedData(events.get(position).getData()));
-        holder.setEvent_description(events.get(position).getDescricao());
-        holder.setEvent_name(events.get(position).getNome());
-        holder.setEvent_image(events.get(position).getRotaImagem());
+        holder.setEventData(DateHandler.getDormatedData(eventsList.getEvents().get(position).getData()));
+        holder.setEventDescription(eventsList.getEvents().get(position).getDescricao());
+        holder.setEventName(eventsList.getEvents().get(position).getNome());
+        holder.setEventImage(eventsList.getEvents().get(position).getRotaImagem());
+        holder.setEventId(String.valueOf(eventsList.getEvents().get(position).getId()));
 
     }
 
     public void addEvents(EventsList eventsList){
 
-        events.addAll(eventsList.getEvents());
+        this.eventsList = eventsList;
+
+        Collections.sort(this.eventsList.getEvents(), new EventsComparator());
+
         notifyDataSetChanged();
     }
 
     @Override
     public int getItemCount() {
-        return events != null ? events.size() : 0;
+        return eventsList.getEvents() != null ? eventsList.getEvents().size() : 0;
     }
 
 }

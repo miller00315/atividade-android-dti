@@ -1,48 +1,62 @@
 package com.example.atividade_android_dti.events;
 
-import com.example.atividade_android_dti.events.adapters.EventsAdapter;
-import com.example.atividade_android_dti.events.contract.EventsContract;
-import com.example.atividade_android_dti.events.domain.data.EventRemoteDataSource;
-import com.example.atividade_android_dti.events.domain.data.EventsDataSource;
-import com.example.atividade_android_dti.events.domain.model.EventsList;
-import com.example.atividade_android_dti.utils.ConnectionCheck;
+import com.example.atividade_android_dti.events.domain.models.EventsList;
 
-public class EventsPresenter implements EventsContract.Presenter, EventsDataSource.requestEventsCallback {
+public class EventsPresenter implements EventsContract.Presenter {
 
     private EventsContract.View mEventsContractView;
-    private EventRemoteDataSource eventRemoteDataSource;
-
+    private EventsInteractor eventsInteractor;
 
     public EventsPresenter(EventsContract.View mEventsCOntractView) {
-        this.mEventsContractView = mEventsCOntractView;
-        eventRemoteDataSource = EventRemoteDataSource.getInstance();
 
-        eventRemoteDataSource.setRetrofit();
+        this.mEventsContractView = mEventsCOntractView;
+
+        eventsInteractor = new EventsInteractor(this);
 
         mEventsCOntractView.setPresenter(this);
-
-
 
     }
 
     @Override
-    public void start() {
-        mEventsContractView.showLoading();
+    public void start() { }
 
-        if(ConnectionCheck.getInstance().isNetworkAvailable()) {
-            eventRemoteDataSource.getEventsData(this);
-        }else{
-            mEventsContractView.noConnectionInternet();
-        }
+    @Override
+    public void requestEventsData() {
+
+        if(mEventsContractView != null)
+            mEventsContractView.showLoading();
+
+        eventsInteractor.resquestEventsData();
     }
 
     @Override
     public void onEventsRequestSuccess(EventsList eventsList) {
-        mEventsContractView.onRequestEventsSuccess(eventsList);
+        if(mEventsContractView != null) {
+            mEventsContractView.onEventsRequestSuccess(eventsList);
+            mEventsContractView.hideLoading();
+        }
     }
 
     @Override
     public void onEventsRequestFailed() {
-        mEventsContractView.onRequestEventsFailed();
+        if(mEventsContractView != null) {
+            mEventsContractView.onEventsRequestFailed();
+            mEventsContractView.hideLoading();
+        }
     }
+
+    @Override
+    public void noConnectionInternet() {
+        if(mEventsContractView != null) {
+            mEventsContractView.noConnectionInternet();
+            mEventsContractView.hideLoading();
+        }
+    }
+
+    @Override
+    public void onDestroy(){
+
+        mEventsContractView = null;
+    }
+
 }

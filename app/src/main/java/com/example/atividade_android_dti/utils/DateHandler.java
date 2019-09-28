@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class DataManipulator {
+public class DateHandler {
 
     public static String getDormatedData(long millis){
 

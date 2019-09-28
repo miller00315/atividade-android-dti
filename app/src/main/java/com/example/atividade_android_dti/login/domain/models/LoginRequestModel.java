@@ -1,4 +1,4 @@
-package com.example.atividade_android_dti.login.domain.model;
+package com.example.atividade_android_dti.login.domain.models;
 
 import com.google.gson.annotations.Expose;
 

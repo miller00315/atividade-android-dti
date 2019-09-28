@@ -5,4 +5,9 @@
     <string name="login">Entrar</string>
     <string name="userNameError">Usuário inválido</string>
     <string name="userPasswordError">Senha inválida</string>
+    <string name="imageEventDescription">Imagem do evento</string>
+    <string name="loginerror">Erro no login, tente novamente"</string>
+    <string name="noInternetConnection">Sem conexão com a internet, verifique sua conexão e tente novamente.</string>
+    <string name="requestDataFailed">Erro ao obter dados</string>
+    <string name="expiredSession">Sua sessão expirou, faça o login novamente.</string>
 </resources>

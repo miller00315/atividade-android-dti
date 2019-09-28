@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/backgroundColor"
     android:padding="16dp"
-    tools:context=".login.LoginScreen">
+    tools:context=".login.LoginActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main_layout_login"
@@ -41,6 +41,7 @@
                 android:layout_height="match_parent"
                 android:inputType="textEmailAddress"
                 android:hint="@string/user"
+                android:fontFamily="@font/montserrat_semi_bold"
                 android:textSize="20sp"
                 android:singleLine="true"/>
 
@@ -63,6 +64,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="@string/password"
+                android:fontFamily="@font/montserrat_semi_bold"
                 android:inputType="textPassword"
                 android:textSize="20sp"
                 android:singleLine="true"/>
@@ -78,7 +80,8 @@
             android:text="@string/login"
             android:textColor="@android:color/primary_text_dark"
             android:textStyle="bold"
-            android:onClick="doLogin"
+            android:onClick="validCredentials"
+            android:fontFamily="@font/montserrat_extra_bold"
             android:background="@drawable/rounded_button_bg"
             app:layout_constraintTop_toBottomOf="@id/password_layout"
             app:layout_constraintBottom_toBottomOf="parent"

@@ -1,4 +1,4 @@
-package com.example.atividade_android_dti.events.domain.model;
+package com.example.atividade_android_dti.events.domain.models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -19,7 +19,7 @@ public class Event {
 
     @SerializedName("data")
     @Expose
-    public long data;
+    public Long data;
 
     @SerializedName("rotaImagem")
     @Expose
@@ -45,7 +45,7 @@ public class Event {
         return descricao;
     }
 
-    public long getData() {
+    public Long getData() {
         return data;
     }
 

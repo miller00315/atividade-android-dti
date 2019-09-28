@@ -1,6 +1,4 @@
-package com.example.atividade_android_dti.login.domain.model;
-
-import androidx.annotation.NonNull;
+package com.example.atividade_android_dti.login.domain.models;
 
 import com.google.gson.annotations.Expose;
 

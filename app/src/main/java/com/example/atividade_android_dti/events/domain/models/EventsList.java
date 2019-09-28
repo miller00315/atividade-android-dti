@@ -1,4 +1,4 @@
-package com.example.atividade_android_dti.events.domain.model;
+package com.example.atividade_android_dti.events.domain.models;
 
 import com.google.gson.annotations.SerializedName;
 

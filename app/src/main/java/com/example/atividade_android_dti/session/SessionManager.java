@@ -7,8 +7,8 @@ import android.os.CountDownTimer;
 import android.util.Log;
 
 import com.example.atividade_android_dti.GlobalApplicationContext;
-import com.example.atividade_android_dti.login.LoginScreen;
-import com.example.atividade_android_dti.login.domain.model.LoginTokenModel;
+import com.example.atividade_android_dti.login.LoginActivity;
+import com.example.atividade_android_dti.login.domain.models.LoginTokenModel;
 import com.example.atividade_android_dti.utils.Utils;
 
 import java.util.concurrent.TimeUnit;
@@ -29,13 +29,11 @@ public class SessionManager {
 
     private SessionManager() { }
 
-    public void saveLoginTokenOnPreferences(LoginTokenModel loginTokenModel){
+    public void setLoginTokenOnPreferences(LoginTokenModel loginTokenModel){
 
         EXPIRATION_SESSION_TIME = loginTokenModel.getIntegerValueTempoExpirar();
 
-        SharedPreferences sharedPreferences = getSharedPreferences();
-
-        SharedPreferences.Editor editor = sharedPreferences.edit();
+        SharedPreferences.Editor editor = getSharedPreferences().edit();
 
         editor.putString("token", loginTokenModel.getToken());
 
@@ -43,17 +41,13 @@ public class SessionManager {
 
     }
 
-    private void clearSharedPreferences(){
+    private void removeTokenSharedPreferences(){
 
-        SharedPreferences sharedPreferences = getSharedPreferences();
-
-        SharedPreferences.Editor editor = sharedPreferences.edit();
+        SharedPreferences.Editor editor = getSharedPreferences().edit();
 
         editor.remove("token");
 
         editor.apply();
-
-        Log.w("lot", sharedPreferences.toString());
 
     }
 
@@ -78,11 +72,11 @@ public class SessionManager {
 
     private void logOut(){
 
-        Intent i = new Intent(GlobalApplicationContext.getAPPCONTEXT(), LoginScreen.class);
+        Intent i = new Intent(GlobalApplicationContext.getAPPCONTEXT(), LoginActivity.class);
 
         GlobalApplicationContext.getAPPCONTEXT().startActivity(i);
 
-        clearSharedPreferences();
+        removeTokenSharedPreferences();
 
         Intent brodCastIntent = new Intent();
         brodCastIntent.setAction(Utils.BROADCAST_MESSAGE);

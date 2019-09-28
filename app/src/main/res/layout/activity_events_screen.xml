@@ -9,7 +9,7 @@
     android:paddingStart="@dimen/sMargin"
     android:paddingEnd="@dimen/sMargin"
     android:background="@color/backgroundColor"
-    tools:context=".events.EventsScreen">
+    tools:context=".events.EventsActivity">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recylcer_events"

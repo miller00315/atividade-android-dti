@@ -15,15 +15,14 @@ import android.widget.Toast;
 
 import com.example.atividade_android_dti.R;
 import com.example.atividade_android_dti.events.adapters.EventsAdapter;
-import com.example.atividade_android_dti.events.contract.EventsContract;
-import com.example.atividade_android_dti.events.domain.model.EventsList;
+import com.example.atividade_android_dti.events.domain.models.EventsList;
 import com.example.atividade_android_dti.utils.Utils;
 
-public class EventsScreen extends AppCompatActivity implements EventsContract.View {
+public class EventsActivity extends AppCompatActivity implements EventsContract.View {
 
     private EventsContract.Presenter mLoginContractPresenter;
-    private RecyclerView recycle_events;
-    private ConstraintLayout loading_layout;
+    private RecyclerView recycleEvents;
+    private ConstraintLayout loadingLayout;
     private EventsAdapter eventsAdapter;
     private BroadcastReceiver mReceiver;
 
@@ -32,8 +31,8 @@ public class EventsScreen extends AppCompatActivity implements EventsContract.Vi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_events_screen);
 
-        recycle_events = findViewById(R.id.recylcer_events);
-        loading_layout = findViewById(R.id.layout_loading);
+        recycleEvents = findViewById(R.id.recylcer_events);
+        loadingLayout = findViewById(R.id.layout_loading);
 
         eventsAdapter = new EventsAdapter();
 
@@ -48,11 +47,11 @@ public class EventsScreen extends AppCompatActivity implements EventsContract.Vi
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
 
-        recycle_events.setHasFixedSize(true);
+        recycleEvents.setHasFixedSize(true);
 
-        recycle_events.setLayoutManager(linearLayoutManager);
+        recycleEvents.setLayoutManager(linearLayoutManager);
 
-        recycle_events.setAdapter(eventsAdapter);
+        recycleEvents.setAdapter(eventsAdapter);
     }
 
     @Override
@@ -60,39 +59,37 @@ public class EventsScreen extends AppCompatActivity implements EventsContract.Vi
         super.onDestroy();
 
         unregisterReceiver(mReceiver);
+        mLoginContractPresenter.onDestroy();
 
     }
 
     @Override
     public void showLoading() {
-        loading_layout.setVisibility(View.VISIBLE);
-        recycle_events.setVisibility(View.GONE);
+        loadingLayout.setVisibility(View.VISIBLE);
+        recycleEvents.setVisibility(View.GONE);
     }
 
     @Override
-    public void onRequestEventsFailed() {
-
-        Toast.makeText(this, "Erro ao obter dados", Toast.LENGTH_LONG).show();
-        loading_layout.setVisibility(View.GONE);
-        recycle_events.setVisibility(View.GONE);
+    public void hideLoading() {
+        loadingLayout.setVisibility(View.GONE);
+        recycleEvents.setVisibility(View.VISIBLE);
     }
 
     @Override
-    public void onRequestEventsSuccess(EventsList eventsList) {
-
+    public void onEventsRequestSuccess(EventsList eventsList) {
         eventsAdapter.addEvents(eventsList);
+    }
 
-        loading_layout.setVisibility(View.GONE);
-        recycle_events.setVisibility(View.VISIBLE);
-
+    @Override
+    public void onEventsRequestFailed() {
+        Toast.makeText(this, getResources().getString(R.string.requestDataFailed), Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void noConnectionInternet() {
 
-        Toast.makeText(this, "Sem conexão com a internet, verifique sua conexão e tente novamente.", Toast.LENGTH_LONG).show();
-        loading_layout.setVisibility(View.GONE);
-        recycle_events.setVisibility(View.GONE);
+        Toast.makeText(this, getResources().getString(R.string.noInternetConnection), Toast.LENGTH_LONG).show();
+
     }
 
     @Override
@@ -100,7 +97,7 @@ public class EventsScreen extends AppCompatActivity implements EventsContract.Vi
 
         if(mLoginContractPresenter == null) {
             mLoginContractPresenter = presenter;
-            mLoginContractPresenter.start();
+            mLoginContractPresenter.requestEventsData();
         }
     }
 
@@ -113,7 +110,7 @@ public class EventsScreen extends AppCompatActivity implements EventsContract.Vi
             @Override
             public void onReceive(Context context, Intent intent) {
 
-                Toast.makeText(context, "Sua sessão expirou, faça o login novamente.", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, context.getResources().getString(R.string.expiredSession), Toast.LENGTH_LONG).show();
 
                finish();
 
