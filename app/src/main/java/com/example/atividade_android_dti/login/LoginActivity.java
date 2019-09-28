@@ -135,7 +135,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if(PermissionsHelper.checkSelfPermissions(this))
+        if(!PermissionsHelper.checkSelfPermissions(this))
             PermissionsHelper.requestSelfPermission(this);
     }
 }
