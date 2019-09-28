@@ -20,7 +20,7 @@ public class LoginInteractor implements LoginApiInterface {
 
     public void doLogin(String user_name, String user_password){
 
-        if(ConnectionCheck.getInstance().isNetworkAvailable()) {
+        if(ConnectionCheck.isNetworkAvailable()) {
 
             boolean isDataOk = true;
 

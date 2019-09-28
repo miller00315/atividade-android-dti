@@ -18,7 +18,7 @@ public class EventsInteractor implements EventsApiInterface {
 
     public void resquestEventsData(){
 
-        if(ConnectionCheck.getInstance().isNetworkAvailable())
+        if(ConnectionCheck.isNetworkAvailable())
             eventsAPI.getEventsData(this);
         else if(presenter != null)
             presenter.noConnectionInternet();

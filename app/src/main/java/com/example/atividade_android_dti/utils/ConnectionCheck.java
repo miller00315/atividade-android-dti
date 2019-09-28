@@ -8,18 +8,7 @@ import com.example.atividade_android_dti.GlobalApplicationContext;
 
 public class ConnectionCheck {
 
-    private static ConnectionCheck INSTANCE;
-
-    public static ConnectionCheck getInstance(){
-
-        if(INSTANCE == null)
-            INSTANCE = new ConnectionCheck();
-
-        return INSTANCE;
-
-    }
-
-    public boolean isNetworkAvailable() {
+    public static boolean isNetworkAvailable() {
 
         try {
             ConnectivityManager connectivityManager = (ConnectivityManager)
