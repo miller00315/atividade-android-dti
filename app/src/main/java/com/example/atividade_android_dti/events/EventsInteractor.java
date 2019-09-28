@@ -21,25 +21,33 @@ public class EventsInteractor implements EventsApiInterface {
 
         if(ConnectionCheck.getInstance().isNetworkAvailable())
             eventsAPI.getEventsData(this);
-        else
+        else if(presenter != null)
             presenter.noConnectionInternet();
+    }
+
+    public void onDestroy(){
+
+        presenter = null;
+        eventsAPI.onDestroy();
     }
 
     @Override
     public void onEventsRequestSuccess(EventsList eventsList) {
 
-
-        if(eventsList == null)
-            presenter.onEventsRequestFailed();
-        else
-            presenter.onEventsRequestSuccess(eventsList);
+        if(presenter != null)
+            if(eventsList == null)
+                presenter.onEventsRequestFailed();
+            else
+                presenter.onEventsRequestSuccess(eventsList);
 
     }
 
     @Override
     public void onEventsRequestFailed() {
 
-        presenter.onEventsRequestFailed();
+        if(presenter != null)
+            presenter.onEventsRequestFailed();
 
     }
+
 }

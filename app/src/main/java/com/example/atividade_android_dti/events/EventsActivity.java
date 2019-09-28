@@ -34,16 +34,17 @@ public class EventsActivity extends AppCompatActivity implements EventsContract.
         recycleEvents = findViewById(R.id.recylcer_events);
         loadingLayout = findViewById(R.id.layout_loading);
 
-        eventsAdapter = new EventsAdapter();
-
         setReceiver();
 
-        new EventsPresenter(this);
+        setRecycler();
+
+        setNewPresenter();
+
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
+    private void setRecycler(){
+
+        eventsAdapter = new EventsAdapter();
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
 
@@ -52,6 +53,14 @@ public class EventsActivity extends AppCompatActivity implements EventsContract.
         recycleEvents.setLayoutManager(linearLayoutManager);
 
         recycleEvents.setAdapter(eventsAdapter);
+
+    }
+
+    public void setNewPresenter(){
+
+        if(mLoginContractPresenter == null)
+            new EventsPresenter(this);
+
     }
 
     @Override
@@ -60,6 +69,7 @@ public class EventsActivity extends AppCompatActivity implements EventsContract.
 
         unregisterReceiver(mReceiver);
         mLoginContractPresenter.onDestroy();
+        eventsAdapter.onDestroy();
 
     }
 
@@ -97,7 +107,6 @@ public class EventsActivity extends AppCompatActivity implements EventsContract.
 
         if(mLoginContractPresenter == null) {
             mLoginContractPresenter = presenter;
-            mLoginContractPresenter.requestEventsData();
         }
     }
 

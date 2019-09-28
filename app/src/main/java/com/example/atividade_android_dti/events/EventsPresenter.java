@@ -15,6 +15,8 @@ public class EventsPresenter implements EventsContract.Presenter {
 
         mEventsCOntractView.setPresenter(this);
 
+        requestEventsData();
+
     }
 
     @Override

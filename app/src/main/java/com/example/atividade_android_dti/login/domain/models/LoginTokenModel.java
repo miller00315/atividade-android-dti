@@ -19,14 +19,6 @@ public class LoginTokenModel {
         return token;
     }
 
-    public String getTempoExpirar() {
-        return tempoExpirar;
-    }
-
-    public int getIntegerValueTempoExpirar(){
-
-        return Integer.parseInt(tempoExpirar);
-
-    }
+    public int getIntegerValueTempoExpirar(){ return Integer.parseInt(tempoExpirar); }
 
 }

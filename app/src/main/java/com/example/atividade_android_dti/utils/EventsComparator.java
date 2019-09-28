@@ -7,6 +7,6 @@ import java.util.Comparator;
 public class EventsComparator implements Comparator<Event> {
     @Override
     public int compare(Event firstEvent, Event secondEvent) {
-        return firstEvent.getData().compareTo(secondEvent.getData());
+        return firstEvent.getDate().compareTo(secondEvent.getDate());
     }
 }

@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import com.example.atividade_android_dti.R;
 import com.example.atividade_android_dti.events.EventsActivity;
-import com.example.atividade_android_dti.utils.PermissionsCheck;
+import com.example.atividade_android_dti.utils.PermissionsHelper;
 import com.example.atividade_android_dti.utils.TextWatchers;
 import com.example.atividade_android_dti.utils.TextWatchersInterface;
 import com.google.android.material.textfield.TextInputEditText;
@@ -23,7 +23,6 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
     private LoginContract.Presenter loginPresenter;
     private TextWatchers textWatchers;
     private TextInputEditText userName, userPassword;
-    private PermissionsCheck permissionsCheck;
     private ConstraintLayout loadingScreen, mainLayoutLogin;
 
     @Override
@@ -36,21 +35,26 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
         loadingScreen = findViewById(R.id.layout_loading);
         mainLayoutLogin = findViewById(R.id.main_layout_login);
 
+        setTextWatchers();
+
+        setNewPresenter();
+
+    }
+
+    public void setTextWatchers(){
+
         if(textWatchers == null)
             textWatchers = TextWatchers.getInstance();
-
-        if(permissionsCheck == null)
-            permissionsCheck = PermissionsCheck.getInstance();
-
-        if(permissionsCheck.checkSelfPermissions(this))
-           permissionsCheck.requestSelfPermission(this);
 
         textWatchers.setListener(this);
 
         userName.addTextChangedListener(textWatchers.getUserNameTextWatcher());
         userPassword.addTextChangedListener(textWatchers.getUserPasswordTextWatcher());
+    }
 
-        new LoginPresenter(this);
+    public void setNewPresenter(){
+        if(loginPresenter == null)
+            new LoginPresenter(this);
     }
 
     @Override
@@ -59,7 +63,6 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
 
         loginPresenter.onDestroy();
         textWatchers.onDestroy();
-        permissionsCheck.onDestroy();
     }
 
     @Override
@@ -73,10 +76,11 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
     }
 
     public void validCredentials(View view) {
-        loginPresenter.validCredentials(Objects.requireNonNull(userName.getText()).toString().trim(),
-                Objects.requireNonNull(userPassword.getText()).toString().trim()); ;
+        loginPresenter.validCredentials(Objects.requireNonNull(userName.getText())
+                        .toString().trim(),
+                Objects.requireNonNull(userPassword.getText())
+                        .toString().trim());
     }
-
 
     @Override
     public void setPresenter(LoginContract.Presenter presenter) {
@@ -129,7 +133,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if(!permissionsCheck.checkSelfPermissions(this))
-            permissionsCheck.requestSelfPermission(this);
+        if(!PermissionsHelper.getInstance().checkSelfPermissions(this))
+            PermissionsHelper.getInstance().requestSelfPermission(this);
     }
 }

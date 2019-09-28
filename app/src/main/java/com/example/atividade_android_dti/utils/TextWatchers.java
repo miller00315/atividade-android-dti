@@ -7,16 +7,16 @@ public class TextWatchers {
 
     private TextWatchersInterface listener;
 
-    private static TextWatchers textWatchers;
+    private static TextWatchers TEXT_WATCHER;
 
     private TextWatchers() { }
 
     public static TextWatchers getInstance(){
 
-        if(textWatchers == null)
-            textWatchers = new TextWatchers();
+        if(TEXT_WATCHER == null)
+            TEXT_WATCHER = new TextWatchers();
 
-        return textWatchers;
+        return TEXT_WATCHER;
 
     }
 
@@ -59,8 +59,8 @@ public class TextWatchers {
     };
 
     public void onDestroy(){
-        TextWatchers.textWatchers.listener = null;
-        TextWatchers.textWatchers = null;
+        TextWatchers.TEXT_WATCHER.listener = null;
+        TextWatchers.TEXT_WATCHER = null;
     }
 
     public TextWatcher getUserNameTextWatcher() {

@@ -2,38 +2,36 @@ package com.example.atividade_android_dti.utils;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
 
 import androidx.core.app.ActivityCompat;
 
-public class PermissionsCheck {
+public class PermissionsHelper {
 
     private static String[] permissions = new String[]{
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.ACCESS_COARSE_LOCATION,
             Manifest.permission.ACCESS_NETWORK_STATE,
             Manifest.permission.INTERNET,
+            Manifest.permission.ACCESS_WIFI_STATE
     };
 
     public static int P_CODE = 433;
 
-    private static PermissionsCheck INSTANCE;
+    private static PermissionsHelper INSTANCE;
 
-    public PermissionsCheck() { }
+    private PermissionsHelper() { }
 
-    public static PermissionsCheck getInstance(){
+    public static PermissionsHelper getInstance(){
 
         if(INSTANCE == null)
-            INSTANCE = new PermissionsCheck();
+            INSTANCE = new PermissionsHelper();
 
         return INSTANCE;
 
     }
 
-    public boolean checkSelfPermissions(Activity act){
+    public boolean checkSelfPermissions(Context context){
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
 
@@ -41,7 +39,7 @@ public class PermissionsCheck {
 
             for(String s: permissions){
 
-                if(ActivityCompat.checkSelfPermission(act, s) != PackageManager.PERMISSION_GRANTED)
+                if(ActivityCompat.checkSelfPermission(context, s) != PackageManager.PERMISSION_GRANTED)
                     allowed = false;
 
             }
@@ -54,11 +52,11 @@ public class PermissionsCheck {
     }
 
     public void onDestroy(){
-        PermissionsCheck.INSTANCE = null;
+        PermissionsHelper.INSTANCE = null;
     }
 
-    public void requestSelfPermission(Activity act){
-        ActivityCompat.requestPermissions(act, permissions, P_CODE);
+    public void requestSelfPermission(Context act){
+        ActivityCompat.requestPermissions((Activity) act, permissions, P_CODE);
     }
 
 }

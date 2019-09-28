@@ -18,7 +18,7 @@ public class LoginInteractor implements LoginApiInterface {
         loginApi = new LoginApi();
     }
 
-    public void login(String user_name, String user_password){
+    public void doLogin(String user_name, String user_password){
 
         if(ConnectionCheck.getInstance().isNetworkAvailable()) {
 
@@ -42,23 +42,6 @@ public class LoginInteractor implements LoginApiInterface {
 
     }
 
-    @Override
-    public void onLoginSuccess(LoginTokenModel loginTokenModel) {
-
-        if(loginTokenModel != null){
-            setToken(loginTokenModel);
-            listener.onLoginSuccess(loginTokenModel);
-        }else{
-            listener.onLoginFailed();
-        }
-
-    }
-
-    @Override
-    public void onLoginFailed() {
-        listener.onLoginFailed();
-    }
-
     private void setToken(LoginTokenModel loginTokenModel){
 
         SessionManager sessionManager =  SessionManager.getInstance();
@@ -69,6 +52,29 @@ public class LoginInteractor implements LoginApiInterface {
 
     }
 
+    @Override
+    public void onLoginSuccess(LoginTokenModel loginTokenModel) {
 
+        if(loginTokenModel != null){
+            setToken(loginTokenModel);
+            if(listener != null)
+                listener.onLoginSuccess(loginTokenModel);
+        }else{
+            if(listener != null)
+                listener.onLoginFailed();
+        }
+
+    }
+
+    @Override
+    public void onLoginFailed() {
+        if(listener != null)
+            listener.onLoginFailed();
+    }
+
+    public void onDestroy(){
+        listener = null;
+        loginApi.onDestroy();
+    }
 
 }

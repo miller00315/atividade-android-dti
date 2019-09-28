@@ -1,7 +1,12 @@
 package com.example.atividade_android_dti.login;
 
 
+import android.content.Context;
+import android.util.Log;
+
+import com.example.atividade_android_dti.GlobalApplicationContext;
 import com.example.atividade_android_dti.login.domain.models.LoginTokenModel;
+import com.example.atividade_android_dti.utils.PermissionsHelper;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -18,25 +23,29 @@ public class LoginPresenter implements LoginContract.Presenter {
 
         mLoginContractView.setPresenter(this);
 
+        checkSelfPermission();
+
     }
 
     @Override
     public void validCredentials(String username, String password) {
 
-        if(mLoginContractView != null)
+        if (mLoginContractView != null)
             mLoginContractView.showLoading();
 
-        mLoginInteractor.login(username, password);
+        mLoginInteractor.doLogin(username, password);
 
     }
 
-    public void onDestroy(){
+    public void onDestroy() {
         mLoginContractView = null;
+        mLoginInteractor.onDestroy();
+        PermissionsHelper.getInstance().onDestroy();
     }
 
     @Override
     public void onLoginFailed() {
-        if(mLoginContractView != null){
+        if (mLoginContractView != null) {
             mLoginContractView.hideLoading();
             mLoginContractView.onLoginFailed();
         }
@@ -44,14 +53,14 @@ public class LoginPresenter implements LoginContract.Presenter {
 
     @Override
     public void onLoginSuccess(LoginTokenModel loginTokenModel) {
-        if(mLoginContractView != null){
+        if (mLoginContractView != null) {
             mLoginContractView.onLoginSuccess();
         }
     }
 
     @Override
     public void invalidUserName() {
-        if(mLoginContractView != null){
+        if (mLoginContractView != null) {
             mLoginContractView.hideLoading();
             mLoginContractView.invalidUserName();
         }
@@ -59,7 +68,7 @@ public class LoginPresenter implements LoginContract.Presenter {
 
     @Override
     public void invalidPassword() {
-        if(mLoginContractView != null){
+        if (mLoginContractView != null) {
             mLoginContractView.hideLoading();
             mLoginContractView.invalidPassword();
         }
@@ -67,7 +76,7 @@ public class LoginPresenter implements LoginContract.Presenter {
 
     @Override
     public void noInternetConnection() {
-        if(mLoginContractView != null){
+        if (mLoginContractView != null) {
             mLoginContractView.hideLoading();
             mLoginContractView.noConnectionInternet();
         }
@@ -75,36 +84,17 @@ public class LoginPresenter implements LoginContract.Presenter {
 
     @Override
     public void start() {
-
     }
- /*
-    @Override
-    public void start() { }
 
-    @Override
-    public void onLoginSuccess(LoginTokenModel loginTokenModel) {
+    private void checkSelfPermission(){
 
-        saveToken(loginTokenModel);
+        Context context = GlobalApplicationContext.getAPPCONTEXT();
+        PermissionsHelper permissionsHelper = PermissionsHelper.getInstance();
 
-        mLoginContractView.onLoginSuccess();
+       if (!permissionsHelper.checkSelfPermissions(context)) {
+           permissionsHelper.requestSelfPermission(context);
+       }
 
     }
 
-    @Override
-    public void onLoginFailed() {
-        mLoginContractView.onLoginFailed();
-    }
-
-
-    private void saveToken(LoginTokenModel loginTokenModel){
-
-        SessionManager sessionManager =  SessionManager.getInstance();
-
-        sessionManager.setLoginTokenOnPreferences(loginTokenModel);
-
-        sessionManager.startSessionCountDown();
-
-    }
-
-    */
 }

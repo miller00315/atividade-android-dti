@@ -1,5 +1,7 @@
 package com.example.atividade_android_dti.events.domain.network;
 
+import androidx.annotation.NonNull;
+
 import com.example.atividade_android_dti.events.domain.models.EventsList;
 import com.example.atividade_android_dti.services.ApiService;
 
@@ -25,26 +27,33 @@ public class EventsApi {
 
     public void getEventsData(final EventsApiInterface eventsApiInterface){
 
-        Call<EventsList> request_events_data = apiService.getEvents();
+        if(apiService != null) {
+
+            Call<EventsList> request_events_data = apiService.getEvents();
 
 
-        request_events_data.enqueue(new Callback<EventsList>() {
-            @Override
-            public void onResponse(Call<EventsList> call, Response<EventsList> response) {
+            request_events_data.enqueue(new Callback<EventsList>() {
+                @Override
+                public void onResponse(@NonNull Call<EventsList> call, @NonNull Response<EventsList> response) {
 
-                if(response.isSuccessful())
-                    eventsApiInterface.onEventsRequestSuccess(response.body());
-                else
+                    if (response.isSuccessful())
+                        eventsApiInterface.onEventsRequestSuccess(response.body());
+                    else
+                        eventsApiInterface.onEventsRequestFailed();
+
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<EventsList> call, @NonNull  Throwable t) {
                     eventsApiInterface.onEventsRequestFailed();
+                    t.printStackTrace();
+                }
+            });
+        }
 
-            }
+    }
 
-            @Override
-            public void onFailure(Call<EventsList> call, Throwable t) {
-                eventsApiInterface.onEventsRequestFailed();
-                t.printStackTrace();
-            }
-        });
-
+    public void onDestroy(){
+        apiService = null;
     }
 }

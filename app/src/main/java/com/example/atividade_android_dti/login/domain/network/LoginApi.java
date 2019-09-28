@@ -1,5 +1,9 @@
 package com.example.atividade_android_dti.login.domain.network;
 
+import android.util.Log;
+
+import androidx.annotation.NonNull;
+
 import com.example.atividade_android_dti.login.domain.models.LoginRequestModel;
 import com.example.atividade_android_dti.login.domain.models.LoginTokenModel;
 import com.example.atividade_android_dti.services.ApiService;
@@ -24,28 +28,39 @@ public class LoginApi {
 
     }
 
+
     public void doLogin(final LoginApiInterface callback, LoginRequestModel loginRequestModel){
 
-        final Call<LoginTokenModel> requestLogin = apiService.login(loginRequestModel);
+        if(apiService != null){
 
-        requestLogin.enqueue(new Callback<LoginTokenModel>() {
-            @Override
-            public void onResponse(Call<LoginTokenModel> call, Response<LoginTokenModel> response) {
+            final Call<LoginTokenModel> requestLogin = apiService.login(loginRequestModel);
 
-                if(response.isSuccessful())
-                    callback.onLoginSuccess(response.body());
-                else
+
+            requestLogin.enqueue(new Callback<LoginTokenModel>() {
+                @Override
+                public void onResponse(@NonNull Call<LoginTokenModel> call,@NonNull Response<LoginTokenModel> response) {
+
+                    if(response.isSuccessful())
+                        callback.onLoginSuccess(response.body());
+                    else
+                        callback.onLoginFailed();
+
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<LoginTokenModel> call,@NonNull Throwable t) {
+
                     callback.onLoginFailed();
+                    t.printStackTrace();
 
-            }
+                }
+            });
+        }
+    }
 
-            @Override
-            public void onFailure(Call<LoginTokenModel> call, Throwable t) {
 
-                callback.onLoginFailed();
-
-            }
-        });
+    public void onDestroy(){
+        apiService = null;
     }
 
 }

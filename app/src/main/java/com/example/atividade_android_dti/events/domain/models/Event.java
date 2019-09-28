@@ -7,23 +7,23 @@ public class Event {
 
     @SerializedName("id")
     @Expose
-    public String id;
+    private String id;
 
     @SerializedName("nome")
     @Expose
-    public String nome;
+    private String nome;
 
     @SerializedName("descricao")
     @Expose
-    public String descricao;
+    private String descricao;
 
     @SerializedName("data")
     @Expose
-    public Long data;
+    private Long data;
 
     @SerializedName("rotaImagem")
     @Expose
-    public String rotaImagem;
+    private String rotaImagem;
 
     public Event(String id, String nome, String descricao, long data, String rotaImagem) {
         this.id = id;
@@ -45,7 +45,7 @@ public class Event {
         return descricao;
     }
 
-    public Long getData() {
+    public Long getDate() {
         return data;
     }
 
