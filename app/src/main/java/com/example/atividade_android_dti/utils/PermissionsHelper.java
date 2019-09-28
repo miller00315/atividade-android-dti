@@ -16,22 +16,9 @@ public class PermissionsHelper {
             Manifest.permission.ACCESS_WIFI_STATE
     };
 
-    public static int P_CODE = 433;
+    private static int P_CODE = 433;
 
-    private static PermissionsHelper INSTANCE;
-
-    private PermissionsHelper() { }
-
-    public static PermissionsHelper getInstance(){
-
-        if(INSTANCE == null)
-            INSTANCE = new PermissionsHelper();
-
-        return INSTANCE;
-
-    }
-
-    public boolean checkSelfPermissions(Context context){
+    public static boolean checkSelfPermissions(Context context){
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
 
@@ -51,12 +38,8 @@ public class PermissionsHelper {
         }
     }
 
-    public void onDestroy(){
-        PermissionsHelper.INSTANCE = null;
-    }
-
-    public void requestSelfPermission(Context act){
-        ActivityCompat.requestPermissions((Activity) act, permissions, P_CODE);
+    public static void requestSelfPermission(Activity act){
+        ActivityCompat.requestPermissions( act, permissions, P_CODE);
     }
 
 }

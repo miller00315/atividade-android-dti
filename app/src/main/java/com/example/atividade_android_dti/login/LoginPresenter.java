@@ -1,5 +1,6 @@
 package com.example.atividade_android_dti.login;
 
+import android.app.Activity;
 import android.content.Context;
 
 import com.example.atividade_android_dti.GlobalApplicationContext;
@@ -20,8 +21,6 @@ public class LoginPresenter implements LoginContract.Presenter {
 
         mLoginContractView.setPresenter(this);
 
-        checkSelfPermission();
-
     }
 
     @Override
@@ -34,10 +33,15 @@ public class LoginPresenter implements LoginContract.Presenter {
 
     }
 
+    @Override
+    public void checkSelfPermission(Activity act) {
+        if (!PermissionsHelper.checkSelfPermissions(act))
+            PermissionsHelper.requestSelfPermission(act);
+    }
+
     public void onDestroy() {
         mLoginContractView = null;
         mLoginInteractor.onDestroy();
-        PermissionsHelper.getInstance().onDestroy();
     }
 
     @Override
@@ -77,17 +81,6 @@ public class LoginPresenter implements LoginContract.Presenter {
             mLoginContractView.hideLoading();
             mLoginContractView.noConnectionInternet();
         }
-    }
-
-
-    private void checkSelfPermission(){
-
-        Context context = GlobalApplicationContext.getAPPCONTEXT();
-        PermissionsHelper permissionsHelper = PermissionsHelper.getInstance();
-
-       if (!permissionsHelper.checkSelfPermissions(context))
-           permissionsHelper.requestSelfPermission(context);
-
     }
 
 }

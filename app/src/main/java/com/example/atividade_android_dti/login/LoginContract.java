@@ -1,5 +1,7 @@
 package com.example.atividade_android_dti.login;
 
+import android.app.Activity;
+
 import com.example.atividade_android_dti.BasePresenter;
 import com.example.atividade_android_dti.BaseView;
 import com.example.atividade_android_dti.login.domain.models.LoginTokenModel;
@@ -37,6 +39,8 @@ public interface LoginContract {
         void noInternetConnection();
 
         void validCredentials(String username, String password);
+
+        void checkSelfPermission(Activity act);
 
         void onDestroy();
     }
