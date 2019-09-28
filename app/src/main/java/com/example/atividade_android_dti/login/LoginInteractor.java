@@ -5,8 +5,8 @@ import com.example.atividade_android_dti.login.domain.network.LoginApiInterface;
 import com.example.atividade_android_dti.login.domain.models.LoginRequestModel;
 import com.example.atividade_android_dti.login.domain.models.LoginTokenModel;
 import com.example.atividade_android_dti.session.SessionManager;
-import com.example.atividade_android_dti.utils.ConnectionCheck;
-import com.example.atividade_android_dti.utils.StringsValidator;
+import com.example.atividade_android_dti.utils.ConnectionHelper;
+import com.example.atividade_android_dti.utils.StringsHelpers;
 
 public class LoginInteractor implements LoginApiInterface {
 
@@ -20,17 +20,17 @@ public class LoginInteractor implements LoginApiInterface {
 
     public void doLogin(String user_name, String user_password){
 
-        if(ConnectionCheck.isNetworkAvailable()) {
+        if(ConnectionHelper.isNetworkAvailable()) {
 
             boolean isDataOk = true;
 
-            if (!StringsValidator.isValidUserName(user_name)) {
+            if (!StringsHelpers.isValidUserName(user_name)) {
                 isDataOk = false;
                 presenter.invalidUserName();
             }
 
 
-            if (!StringsValidator.isValidPassword(user_password)) {
+            if (!StringsHelpers.isValidPassword(user_password)) {
                 isDataOk = false;
                 presenter.invalidPassword();
             }

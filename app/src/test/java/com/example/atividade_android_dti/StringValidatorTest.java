@@ -1,7 +1,7 @@
 package com.example.atividade_android_dti;
 
-import com.example.atividade_android_dti.utils.DateHandler;
-import com.example.atividade_android_dti.utils.StringsValidator;
+import com.example.atividade_android_dti.utils.DateHelper;
+import com.example.atividade_android_dti.utils.StringsHelpers;
 
 
 import org.junit.Test;
@@ -15,38 +15,38 @@ public class StringValidatorTest {
 
     @Test
     public void nameValidator_CorrectSimple_ReturnsTrue(){
-        assertTrue(StringsValidator.isValidUserName("Joao.lucas"));
-        assertTrue(StringsValidator.isValidUserName("Joaolucas"));
-        assertTrue(StringsValidator.isValidUserName("joaolucas"));
-        assertTrue(StringsValidator.isValidUserName("joao.lucas"));
+        assertTrue(StringsHelpers.isValidUserName("Joao.lucas"));
+        assertTrue(StringsHelpers.isValidUserName("Joaolucas"));
+        assertTrue(StringsHelpers.isValidUserName("joaolucas"));
+        assertTrue(StringsHelpers.isValidUserName("joao.lucas"));
     }
 
     @Test
     public void passwordValidator_CorrectSimple_ReturunsTrue(){
-        assertTrue(StringsValidator.isValidPassword("123456"));
-        assertTrue(StringsValidator.isValidPassword("abcdef"));
-        assertTrue(StringsValidator.isValidPassword("12$#ad"));
+        assertTrue(StringsHelpers.isValidPassword("123456"));
+        assertTrue(StringsHelpers.isValidPassword("abcdef"));
+        assertTrue(StringsHelpers.isValidPassword("12$#ad"));
 
     }
 
     @Test
     public void nameValidator_CorrectSimple_ReturnsFalse(){
-        assertFalse(StringsValidator.isValidUserName("Joao_^lucas"));
-        assertFalse(StringsValidator.isValidUserName("Joao*=lucas"));
-        assertFalse(StringsValidator.isValidUserName("joao()lucas"));
-        assertFalse(StringsValidator.isValidUserName("Joao-+lucas"));
-        assertFalse(StringsValidator.isValidUserName(""));
+        assertFalse(StringsHelpers.isValidUserName("Joao_^lucas"));
+        assertFalse(StringsHelpers.isValidUserName("Joao*=lucas"));
+        assertFalse(StringsHelpers.isValidUserName("joao()lucas"));
+        assertFalse(StringsHelpers.isValidUserName("Joao-+lucas"));
+        assertFalse(StringsHelpers.isValidUserName(""));
     }
 
     @Test
     public void passwordValidator_CorrectSimple_ReturnsFalse(){
-        assertFalse(StringsValidator.isValidPassword("1234"));
-        assertFalse(StringsValidator.isValidPassword(""));
-        assertFalse(StringsValidator.isValidPassword("12345"));
+        assertFalse(StringsHelpers.isValidPassword("1234"));
+        assertFalse(StringsHelpers.isValidPassword(""));
+        assertFalse(StringsHelpers.isValidPassword("12345"));
     }
 
     @Test
     public void dataHandler_FormatDat_CorrectFormatTrue(){
-        assertEquals(DateHandler.getDormatedData(1567306800000L), "01/09/2019");
+        assertEquals(DateHelper.getDormatedData(1567306800000L), "01/09/2019");
     }
 }

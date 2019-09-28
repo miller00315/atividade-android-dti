@@ -3,7 +3,7 @@ package com.example.atividade_android_dti.events;
 import com.example.atividade_android_dti.events.domain.network.EventsApi;
 import com.example.atividade_android_dti.events.domain.network.EventsApiInterface;
 import com.example.atividade_android_dti.events.domain.models.EventsList;
-import com.example.atividade_android_dti.utils.ConnectionCheck;
+import com.example.atividade_android_dti.utils.ConnectionHelper;
 
 public class EventsInteractor implements EventsApiInterface {
 
@@ -18,7 +18,7 @@ public class EventsInteractor implements EventsApiInterface {
 
     public void resquestEventsData(){
 
-        if(ConnectionCheck.isNetworkAvailable())
+        if(ConnectionHelper.isNetworkAvailable())
             eventsAPI.getEventsData(this);
         else if(presenter != null)
             presenter.noConnectionInternet();

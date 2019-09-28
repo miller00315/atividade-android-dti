@@ -37,7 +37,7 @@ public class TextWatchers {
 
         @Override
         public void afterTextChanged(Editable editable) {
-            listener.isValidUserName(StringsValidator.isValidUserName(editable.toString().trim()));
+            listener.isValidUserName(StringsHelpers.isValidUserName(editable.toString().trim()));
         }
     };
 
@@ -54,7 +54,7 @@ public class TextWatchers {
 
         @Override
         public void afterTextChanged(Editable editable) {
-            listener.isValidUserPassword(StringsValidator.isValidPassword(editable.toString().trim()));
+            listener.isValidUserPassword(StringsHelpers.isValidPassword(editable.toString().trim()));
         }
     };
 

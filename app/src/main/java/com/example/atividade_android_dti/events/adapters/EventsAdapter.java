@@ -14,7 +14,7 @@ import com.example.atividade_android_dti.R;
 import com.example.atividade_android_dti.events.domain.models.EventsList;
 import com.example.atividade_android_dti.events.viewHolders.EventsViewHolder;
 import com.example.atividade_android_dti.login.LoginContract;
-import com.example.atividade_android_dti.utils.DateHandler;
+import com.example.atividade_android_dti.utils.DateHelper;
 import com.example.atividade_android_dti.utils.EventsComparator;
 
 import java.util.Collections;
@@ -33,7 +33,7 @@ public class EventsAdapter<P extends LoginContract.Presenter> extends RecyclerVi
     @Override
     public void onBindViewHolder(@NonNull EventsViewHolder holder, int position) {
 
-            holder.setEventData(DateHandler.getDormatedData(eventsList.getEvents().get(position).getDate()));
+            holder.setEventData(DateHelper.getDormatedData(eventsList.getEvents().get(position).getDate()));
             holder.setEventDescription(eventsList.getEvents().get(position).getDescricao());
             holder.setEventName(eventsList.getEvents().get(position).getNome());
             holder.setEventImage(eventsList.getEvents().get(position).getRotaImagem());

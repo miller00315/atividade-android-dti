@@ -6,7 +6,7 @@ import android.net.NetworkInfo;
 
 import com.example.atividade_android_dti.GlobalApplicationContext;
 
-public class ConnectionCheck {
+public class ConnectionHelper {
 
     public static boolean isNetworkAvailable() {
 
