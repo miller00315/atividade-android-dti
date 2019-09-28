@@ -2,7 +2,7 @@
 Repositório criado para armazenar projeto de teste em android para DTI
 
 Para executar o projeto não existem nenhuma peculiaridade, pode-se utilizar a IDE Android Studio, ou outra para o
-desenvolvimento de aplicações android que você esteja acostumado.
+desenvolvimento de aplicações android que você esteja acostumado, sincronize o Gradle corretamente e verifique o SDK.
 
 Bibliotecas utilizadas:
   retrofit2:retrofit:2.5.0,
