@@ -17,6 +17,7 @@ import com.example.atividade_android_dti.R;
 import com.example.atividade_android_dti.events.adapters.EventsAdapter;
 import com.example.atividade_android_dti.events.domain.models.EventsList;
 import com.example.atividade_android_dti.session.SessionManager;
+import com.example.atividade_android_dti.utils.ActivityStatusHelper;
 import com.example.atividade_android_dti.utils.Utils;
 
 public class EventsActivity extends AppCompatActivity implements EventsContract.View {

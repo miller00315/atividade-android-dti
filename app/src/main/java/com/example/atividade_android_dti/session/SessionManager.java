@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.CountDownTimer;
-import android.util.Log;
 
 import com.example.atividade_android_dti.GlobalApplicationContext;
 import com.example.atividade_android_dti.login.LoginActivity;
