@@ -1,6 +1,5 @@
 package com.example.atividade_android_dti.events;
 
-
 import com.example.atividade_android_dti.events.domain.network.EventsApi;
 import com.example.atividade_android_dti.events.domain.network.EventsApiInterface;
 import com.example.atividade_android_dti.events.domain.models.EventsList;

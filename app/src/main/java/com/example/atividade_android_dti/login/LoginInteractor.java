@@ -10,11 +10,11 @@ import com.example.atividade_android_dti.utils.StringsValidator;
 
 public class LoginInteractor implements LoginApiInterface {
 
-    private LoginContract.Presenter listener;
+    private LoginContract.Presenter presenter;
     private LoginApi loginApi;
 
-    public LoginInteractor(LoginContract.Presenter listener) {
-        this.listener = listener;
+    public LoginInteractor(LoginContract.Presenter presenter) {
+        this.presenter = presenter;
         loginApi = new LoginApi();
     }
 
@@ -26,19 +26,19 @@ public class LoginInteractor implements LoginApiInterface {
 
             if (!StringsValidator.isValidUserName(user_name)) {
                 isDataOk = false;
-                listener.invalidUserName();
+                presenter.invalidUserName();
             }
 
 
             if (!StringsValidator.isValidPassword(user_password)) {
                 isDataOk = false;
-                listener.invalidPassword();
+                presenter.invalidPassword();
             }
 
             if (isDataOk)
                 loginApi.doLogin(this, new LoginRequestModel(user_name, user_password));
         }else
-            listener.noInternetConnection();
+            presenter.noInternetConnection();
 
     }
 
@@ -57,23 +57,23 @@ public class LoginInteractor implements LoginApiInterface {
 
         if(loginTokenModel != null){
             setToken(loginTokenModel);
-            if(listener != null)
-                listener.onLoginSuccess(loginTokenModel);
+            if(presenter != null)
+                presenter.onLoginSuccess(loginTokenModel);
         }else{
-            if(listener != null)
-                listener.onLoginFailed();
+            if(presenter != null)
+                presenter.onLoginFailed();
         }
 
     }
 
     @Override
     public void onLoginFailed() {
-        if(listener != null)
-            listener.onLoginFailed();
+        if(presenter != null)
+            presenter.onLoginFailed();
     }
 
     public void onDestroy(){
-        listener = null;
+        presenter = null;
         loginApi.onDestroy();
     }
 

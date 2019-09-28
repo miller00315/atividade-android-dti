@@ -1,14 +1,11 @@
 package com.example.atividade_android_dti.login;
 
-
 import android.content.Context;
-import android.util.Log;
 
 import com.example.atividade_android_dti.GlobalApplicationContext;
 import com.example.atividade_android_dti.login.domain.models.LoginTokenModel;
 import com.example.atividade_android_dti.utils.PermissionsHelper;
 
-import static com.google.common.base.Preconditions.checkNotNull;
 
 public class LoginPresenter implements LoginContract.Presenter {
 
@@ -17,7 +14,7 @@ public class LoginPresenter implements LoginContract.Presenter {
 
     public LoginPresenter(LoginContract.View mLoginContractView) {
 
-        this.mLoginContractView = checkNotNull(mLoginContractView);
+        this.mLoginContractView = mLoginContractView;
 
         mLoginInteractor = new LoginInteractor(this);
 
