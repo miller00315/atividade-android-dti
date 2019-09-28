@@ -9,6 +9,7 @@ import android.util.Log;
 import com.example.atividade_android_dti.GlobalApplicationContext;
 import com.example.atividade_android_dti.login.LoginActivity;
 import com.example.atividade_android_dti.login.domain.models.LoginTokenModel;
+import com.example.atividade_android_dti.utils.ActivityStatusHelper;
 import com.example.atividade_android_dti.utils.Utils;
 
 import java.util.concurrent.TimeUnit;
@@ -81,11 +82,28 @@ public class SessionManager {
        timerSession.start();
     }
 
+    public void onDestroy(){
+
+        if(timerSession != null)
+            timerSession.cancel();
+
+        removeTokenSharedPreferences();
+
+        EXPIRATION_SESSION_TIME = 0;
+        INSTANCE = null;
+
+    }
+
     private void logOut(){
 
-        Intent i = new Intent(GlobalApplicationContext.getAPPCONTEXT(), LoginActivity.class);
-        GlobalApplicationContext.getAPPCONTEXT().startActivity(i);
-        removeTokenSharedPreferences();
+        if(ActivityStatusHelper.isMyApplicationForeground()) {
+
+            Intent i = new Intent(GlobalApplicationContext.getAPPCONTEXT(), LoginActivity.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            GlobalApplicationContext.getAPPCONTEXT().startActivity(i);
+
+        }
 
         Intent brodCastIntent = new Intent();
         brodCastIntent.setAction(Utils.BROADCAST_MESSAGE);
